@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BoardGameHub – Login</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container nav-container">
+    <a href="index.html" class="logo">BoardGameHub</a>
+    <nav>
+      <button class="nav-toggle" aria-label="Отвори меню">☰</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="tracker.html">Tracker</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="page-header">
+    <div class="container">
+      <h1>Login</h1>
+      <p>Влез, за да ползваш Tracker и да пишеш ревюта.</p>
+    </div>
+  </section>
+
+  <section class="contact-section">
+    <div class="container">
+      <form id="login-form" class="contact-form" style="max-width:520px;">
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" required placeholder="example@email.com">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Парола</label>
+          <input type="password" id="password" required minlength="4" placeholder="••••••••">
+        </div>
+
+        <button type="submit" class="btn primary">Login</button>
+        <p id="login-result" class="form-result"></p>
+
+        <p style="margin-top:0.9rem; color:#666;">
+          Нямаш акаунт? <a href="register.html">Регистрация</a>
+        </p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2025 Petar Kuzmin – BoardGameHub</p>
+  </div>
+</footer>
+
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("login-form");
+    const result = document.getElementById("login-result");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      result.textContent = "";
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      try {
+        const r = await loginUser(email, password);
+        result.style.color = "#2e7d32";
+        result.textContent = r.mode === "backend"
+          ? "Успешен вход!"
+          : "Успешен вход (demo режим – бекендът не отговори).";
+        window.location.href = "gallery.html";
+      } catch (err) {
+        result.style.color = "#d32f2f";
+        result.textContent = err.message || "Грешка при вход.";
+      }
+    });
+  });
+</script>
+</body>
+</html>

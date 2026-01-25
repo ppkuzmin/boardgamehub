@@ -1,0 +1,61 @@
+Файлът ти main.js прави две основни неща: 
+- Управлява мобилното (бургер) меню.
+- Управлява контактната форма (валидира полетата и показва съобщение „демо изпратено“).
+
+document.addEventListener
+Изчаква се DOM-ът да е зареден.
+Намират се:
+- бутонът за меню: .nav-toggle (този с „☰“ в HTML-а)
+- списъкът с линковете: .nav-links
+При клик върху бутона:
+- navLinks.classList.toggle("show");
+→ ако .nav-links няма клас show → добавя го
+→ ако вече го има → маха го
+
+Така JS само включва/изключва класа show.
+Истинската „магия“ на респонсив менюто е в CSS-а.
+
+В style.css имаш медия заявка за малки екрани:
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: inline-flex;
+    }
+
+    .nav-links {
+        position: absolute;
+        right: 5%;
+        top: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        background: #ffffff;
+        padding: 0.5rem 1rem 0.75rem;
+        border-radius: 0 0 12px 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        display: none;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+}
+
+На голям екран (над 768px)
+.nav-toggle изобщо не се показва (по-горе в CSS не му е зададен display, а по default е display: none, или го криеш явно).
+.nav-links са просто flex редица с линкове в хедъра.
+
+
+На малък екран (под/равно 768px)
+Показва се бургер бутонът:
+.nav-toggle {
+    display: inline-flex;
+}
+Скрива се менюто по подразбиране:
+.nav-links {
+    ...;
+    display: none;
+}
+Когато JS добави класа .show:
+.nav-links.show {
+    display: flex;
+}
+

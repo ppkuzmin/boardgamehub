@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoardGameHub – Tracker</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container nav-container">
+        <a href="index.html" class="logo">BoardGameHub</a>
+        <nav>
+            <button class="nav-toggle" aria-label="Отвори меню">☰</button>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+<li><a href="tracker.html" class="active">Tracker</a></li>
+</ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+
+    <!-- HEADER OF PAGE -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Game Tracker</h1>
+            <p>Записвай игрите, участниците и победителите – всичко се пази локално в браузъра.</p>
+        </div>
+    </section>
+
+    <section class="tracker-section">
+        <div class="container">
+            <div class="card">
+
+                <!-- Tabs -->
+                <div class="tracker-tabs">
+                    <button class="tracker-tab active" data-tab="track">Track Game</button>
+                    <button class="tracker-tab" data-tab="history">History</button>
+                    <button class="tracker-tab" data-tab="stats">Statistics</button>
+                </div>
+
+                <!-- TAB: TRACK GAME -->
+                <div id="tab-track" class="tracker-panel active">
+                    <h2>Нова игра</h2>
+                    <p>Въведи име на играта, датата и участниците по класиране.</p>
+
+                    <form id="game-form" class="game-form">
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="game-date">Дата</label>
+                                <input type="date" id="game-date" required>
+                            </div>
+
+                            <div class="form-group">
+                                
+    <label for="game-select">Игра</label>
+    <select id="game-select" required>
+        <option value="">Избери игра</option>
+    </select>
+</div>
+
+                            <div class="form-group">
+                                <label for="num-players">Брой участници</label>
+                                <input type="number" id="num-players" min="1" max="10" value="2">
+                            </div>
+                        </div>
+
+                        <h3 class="subheader">Участници (по класиране)</h3>
+                        <div id="players-container" class="players-container">
+                            <!-- JS пълни редовете за играчите -->
+                        </div>
+
+                        <button type="submit" class="btn primary" style="margin-top: 1rem;">
+                            Запиши резултата
+                        </button>
+                    </form>
+                </div>
+
+                <!-- TAB: HISTORY -->
+                <div id="tab-history" class="tracker-panel">
+                    <h2>История на изиграните игри</h2>
+                    <p class="history-hint">Данните се пазят локално в браузъра (localStorage).</p>
+
+                    <div id="history-list" class="history-list">
+                        <!-- JS добавя картите с историята -->
+                    </div>
+
+                    <button id="clear-history-btn" class="btn danger" style="margin-top: 1rem;">
+                        Изчисти историята
+                    </button>
+                </div>
+
+                                <!-- TAB: STATISTICS -->
+                <div id="tab-stats" class="tracker-panel">
+                    <h2>Статистики</h2>
+                    <p class="history-hint">
+                        Виж кой печели най-често – общо и по конкретни игри.
+                    </p>
+
+                    <div class="stats-controls">
+                        <div class="form-group">
+                            <label for="game-filter">Филтър по игра</label>
+                            <select id="game-filter">
+                                <!-- JS ще добави: "Всички игри", Catan, Dune Imperium и т.н. -->
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="stats-podium" class="stats-podium">
+                        <!-- JS ще изпише 🥇 🥈 🥉 с брой победи -->
+                    </div>
+
+                    <div class="stats-chart-wrapper">
+                        <canvas id="stats-chart"></canvas>
+                    </div>
+
+                    <p id="no-stats-message" class="empty-history" style="display:none;">
+                        Няма достатъчно данни за статистика.
+                    </p>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2025 Petar Kuzmin – BoardGameHub</p>
+    </div>
+</footer>
+<script src="js/auth.js"></script>
+
+<script src="js/main.js"></script>
+<!-- ВАЖНО: Chart.js, за да работят статистиките -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/tracker.js"></script>
+
+
+</body>
+</html>
