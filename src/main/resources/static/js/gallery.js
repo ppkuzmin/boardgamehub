@@ -21,7 +21,11 @@
     "Catan": {
       main: "images/catan_1.webp",
       alt:  "images/catan_2.webp"
-    }
+    },
+    "Azul": {
+          main: "images/Azul_1.jpg",
+          alt:  "images/Azul_2.jpg"
+        }
   };
 
   const FALLBACK = {

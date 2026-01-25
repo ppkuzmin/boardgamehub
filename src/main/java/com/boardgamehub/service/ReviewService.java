@@ -45,7 +45,7 @@ public class ReviewService {
         }
 
         User user = authService.requireUser(session);
-        Game game = gameService.getById(req.gameId());
+        Game game = gameService.requireGameEntity(req.gameId());
 
         Review r = new Review();
         r.setUser(user);

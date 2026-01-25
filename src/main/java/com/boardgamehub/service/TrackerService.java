@@ -38,7 +38,7 @@ public class TrackerService {
         }
 
         User user = authService.requireUser(session);
-        Game game = gameService.getById(req.gameId());
+        Game game = gameService.requireGameEntity(req.gameId());
 
         LocalDate playedAt = (req.playedAt() == null || req.playedAt().isBlank())
                 ? LocalDate.now()
