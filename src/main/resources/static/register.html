@@ -1,103 +1,106 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BoardGameHub – Register</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoardGameHub – Register</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <header class="site-header">
-  <div class="container nav-container">
-    <a href="index.html" class="logo">BoardGameHub</a>
-    <nav>
-      <button class="nav-toggle" aria-label="Отвори меню">☰</button>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="tracker.html">Tracker</a></li>
-      </ul>
-    </nav>
-  </div>
+    <div class="container nav-container">
+        <a href="index.html" class="logo">BoardGameHub</a>
+        <nav>
+            <button class="nav-toggle" aria-label="Отвори меню">☰</button>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+
+                <li><a href="tracker.html" data-nav="tracker" style="display:none;">Tracker</a></li>
+
+                <li><a href="login.html" data-nav="login">Login</a></li>
+                <li><a href="register.html" class="active" data-nav="register">Register</a></li>
+                <li><a href="#" data-nav="logout" style="display:none;">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
 </header>
 
 <main>
-  <section class="page-header">
-    <div class="container">
-      <h1>Register</h1>
-      <p>Създай акаунт (email + парола) и започни да записваш игри.</p>
-    </div>
-  </section>
-
-  <section class="contact-section">
-    <div class="container">
-      <form id="register-form" class="contact-form" style="max-width:520px;">
-        <div class="form-group">
-          <label for="email">E-mail</label>
-          <input type="email" id="email" required placeholder="example@email.com">
+    <section class="page-header">
+        <div class="container">
+            <h1>Register</h1>
+            <p>Създай акаунт (email + парола) и започни да записваш игри.</p>
         </div>
+    </section>
 
-        <div class="form-group">
-          <label for="password">Парола</label>
-          <input type="password" id="password" required minlength="4" placeholder="••••••••">
+    <section class="contact-section">
+        <div class="container">
+            <form id="register-form" class="contact-form" style="max-width:520px;">
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" required placeholder="example@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Парола</label>
+                    <input type="password" id="password" required minlength="4" placeholder="••••••••">
+                </div>
+
+                <div class="form-group">
+                    <label for="password2">Повтори паролата</label>
+                    <input type="password" id="password2" required minlength="4" placeholder="••••••••">
+                </div>
+
+                <button type="submit" class="btn primary">Create account</button>
+                <p id="register-result" class="form-result"></p>
+
+                <p style="margin-top:0.9rem; color:#666;">
+                    Имаш акаунт? <a href="login.html">Login</a>
+                </p>
+            </form>
         </div>
-
-        <div class="form-group">
-          <label for="password2">Повтори паролата</label>
-          <input type="password" id="password2" required minlength="4" placeholder="••••••••">
-        </div>
-
-        <button type="submit" class="btn primary">Create account</button>
-        <p id="register-result" class="form-result"></p>
-
-        <p style="margin-top:0.9rem; color:#666;">
-          Имаш акаунт? <a href="login.html">Login</a>
-        </p>
-      </form>
-    </div>
-  </section>
+    </section>
 </main>
 
 <footer>
-  <div class="container">
-    <p>&copy; 2025 Petar Kuzmin – BoardGameHub</p>
-  </div>
+    <div class="container">
+        <p>&copy; 2025 Petar Kuzmin – BoardGameHub</p>
+    </div>
 </footer>
 
 <script src="js/auth.js"></script>
 <script src="js/main.js"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("register-form");
-    const result = document.getElementById("register-result");
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("register-form");
+      const result = document.getElementById("register-result");
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      result.textContent = "";
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        result.textContent = "";
 
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-      const password2 = document.getElementById("password2").value;
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const password2 = document.getElementById("password2").value;
 
-      if (password !== password2) {
-        result.style.color = "#d32f2f";
-        result.textContent = "Паролите не съвпадат.";
-        return;
-      }
+        if (password !== password2) {
+          result.style.color = "#d32f2f";
+          result.textContent = "Паролите не съвпадат.";
+          return;
+        }
 
-      try {
-        const r = await registerUser(email, password);
-        result.style.color = "#2e7d32";
-        result.textContent = r.mode === "backend"
-          ? "Регистрацията е успешна!"
-          : "Регистрация успешна (demo режим – бекендът не отговори).";
-        window.location.href = "gallery.html";
-      } catch (err) {
-        result.style.color = "#d32f2f";
-        result.textContent = err.message || "Грешка при регистрация.";
-      }
+        try {
+          await window.Auth.register(email, password);
+          result.style.color = "#2e7d32";
+          result.textContent = "Регистрацията е успешна!";
+          window.location.href = "gallery.html";
+        } catch (err) {
+          result.style.color = "#d32f2f";
+          result.textContent = err.message || "Грешка при регистрация.";
+        }
+      });
     });
-  });
 </script>
 </body>
 </html>

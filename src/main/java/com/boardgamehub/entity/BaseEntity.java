@@ -1,10 +1,9 @@
-package org.example.entity;
+package com.boardgamehub.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
 
 @MappedSuperclass
 @Getter

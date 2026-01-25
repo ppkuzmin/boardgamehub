@@ -1,79 +1,46 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // ---------- Mobile (burger) menu ----------
-  const navToggle = document.querySelector(".nav-toggle");
-  const navLinks  = document.querySelector(".nav-links");
-
-  if (navToggle && navLinks) {
-    navToggle.addEventListener("click", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  // ----- Burger menu -----
+  const toggleBtn = document.querySelector(".nav-toggle");
+  const navLinks = document.querySelector(".nav-links");
+  if (toggleBtn && navLinks) {
+    toggleBtn.addEventListener("click", () => {
       navLinks.classList.toggle("show");
     });
   }
 
-  // ---------- Auth UI (Login/Register/Logout + hide Tracker) ----------
-  setupAuthNav();
-  guardTrackerPage();
+  // ----- Auth nav toggle + guard -----
+  const isTrackerPage = location.pathname.endsWith("/tracker.html");
 
-  function setupAuthNav() {
-    const navLinks = document.querySelector(".nav-links");
-    if (!navLinks) return;
+  const navTracker = document.querySelector('[data-nav="tracker"]');
+  const navLogin = document.querySelector('[data-nav="login"]');
+  const navRegister = document.querySelector('[data-nav="register"]');
+  const navLogout = document.querySelector('[data-nav="logout"]');
 
-    const user = (typeof getCurrentUser === "function") ? getCurrentUser() : null;
-
-    // Hide Tracker for guests
-    const trackerLink = Array.from(navLinks.querySelectorAll("a"))
-      .find(a => a.getAttribute("href") === "tracker.html");
-    if (trackerLink) trackerLink.parentElement.style.display = user ? "" : "none";
-
-    // Remove Guestbook / Contact if still present in any file
-    ["comments.html", "contacts.html"].forEach(href => {
-      const a = Array.from(navLinks.querySelectorAll("a")).find(x => x.getAttribute("href") === href);
-      if (a) a.parentElement.remove();
-    });
-
-    const existingLogin = Array.from(navLinks.querySelectorAll("a"))
-      .find(a => a.getAttribute("href") === "login.html");
-    const existingRegister = Array.from(navLinks.querySelectorAll("a"))
-      .find(a => a.getAttribute("href") === "register.html");
-    const existingLogout = navLinks.querySelector("[data-logout]");
-
-    if (!user) {
-      if (existingLogout) existingLogout.closest("li")?.remove();
-
-      if (!existingLogin) {
-        const li = document.createElement("li");
-        li.innerHTML = `<a href="login.html">Login</a>`;
-        navLinks.appendChild(li);
-      }
-      if (!existingRegister) {
-        const li = document.createElement("li");
-        li.innerHTML = `<a href="register.html">Register</a>`;
-        navLinks.appendChild(li);
-      }
-    } else {
-      if (existingLogin) existingLogin.closest("li")?.remove();
-      if (existingRegister) existingRegister.closest("li")?.remove();
-
-      if (!existingLogout) {
-        const li = document.createElement("li");
-        const email = user.email || "user";
-        li.innerHTML = `<a href="#" data-logout title="${email}">Logout</a>`;
-        navLinks.appendChild(li);
-
-        li.querySelector("[data-logout]").addEventListener("click", (e) => {
-          e.preventDefault();
-          if (typeof logoutUser === "function") logoutUser();
-          window.location.href = "index.html";
-        });
-      }
-    }
+  let logged = false;
+  try {
+    const res = await fetch("/api/auth/me", { credentials: "include" });
+    logged = res.ok;
+  } catch {
+    logged = false;
   }
 
-  // If someone tries to open tracker.html directly without auth -> redirect to login
-  function guardTrackerPage() {
-    const isTracker = window.location.pathname.endsWith("tracker.html");
-    if (!isTracker) return;
+  if (navTracker) navTracker.style.display = logged ? "inline-block" : "none";
+  if (navLogin) navLogin.style.display = logged ? "none" : "inline-block";
+  if (navRegister) navRegister.style.display = logged ? "none" : "inline-block";
+  if (navLogout) navLogout.style.display = logged ? "inline-block" : "none";
 
-    const user = (typeof getCurrentUser === "function") ? getCurrentUser() : null;
-    if (!user) window.location.href = "login.html";
+  if (isTrackerPage && !logged) {
+    location.href = "/login.html";
+    return;
+  }
+
+  if (navLogout) {
+    navLogout.addEventListener("click", async (e) => {
+      e.preventDefault();
+      try {
+        await window.Auth.logout();
+      } catch {}
+      location.href = "/index.html";
+    });
   }
 });

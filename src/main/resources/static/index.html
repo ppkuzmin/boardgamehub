@@ -1,66 +1,70 @@
 <!DOCTYPE html>
 <html lang="bg">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BoardGameHub – Начало</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoardGameHub – Начало</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <header class="site-header">
-  <div class="container nav-container">
-    <a href="index.html" class="logo">BoardGameHub</a>
-    <nav>
-      <button class="nav-toggle" aria-label="Отвори меню">☰</button>
-      <ul class="nav-links">
-        <li><a href="index.html" class="active">Home</a></li>
-        <li><a href="gallery.html">Gallery</a></li>
-        <li><a href="tracker.html">Tracker</a></li>
-        <!-- Login/Register или Logout се добавят от main.js -->
-      </ul>
-    </nav>
-  </div>
+    <div class="container nav-container">
+        <a href="index.html" class="logo">BoardGameHub</a>
+        <nav>
+            <button class="nav-toggle" aria-label="Отвори меню">☰</button>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+
+                <li><a href="tracker.html" data-nav="tracker" style="display:none;">Tracker</a></li>
+
+                <li><a href="login.html" data-nav="login">Login</a></li>
+                <li><a href="register.html" data-nav="register">Register</a></li>
+                <li><a href="#" data-nav="logout" style="display:none;">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
 </header>
 
 <main>
-  <section class="hero">
-    <div class="container hero-content">
-      <div class="hero-text">
-        <p class="hero-tagline">Welcome to</p>
-        <h1>BoardGameHub</h1>
-        <p class="hero-subtitle">
-          Discover, collect and share your passion for board games.
-          Твоето място за настолни игри, приятели и незабравими вечери.
-        </p>
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <p class="hero-tagline">Welcome to</p>
+                <h1>BoardGameHub</h1>
+                <p class="hero-subtitle">
+                    Discover, collect and share your passion for board games.
+                    Твоето място за настолни игри, приятели и незабравими вечери.
+                </p>
 
-        <div class="hero-buttons">
-          <a href="gallery.html" class="btn primary">Explore Gallery</a>
-          <a href="register.html" class="btn secondary">Create account</a>
+                <div class="hero-buttons">
+                    <a href="gallery.html" class="btn primary">Explore Gallery</a>
+                    <a href="register.html" class="btn secondary">Create account</a>
+                </div>
+            </div>
+
+            <div class="hero-image">
+                <img src="images/hero_image.png" alt="Настолна игра на маса">
+            </div>
         </div>
-      </div>
+    </section>
 
-      <div class="hero-image">
-        <img src="images/hero_image.png" alt="Настолна игра на маса">
-      </div>
-    </div>
-  </section>
-
-  <section class="highlight">
-    <div class="container">
-      <h2>Why Board Games Matter</h2>
-      <p>
-        Настолните игри не са само забавление – те събират хората,
-        предизвикват ни да мислим и създават много спомени.
-      </p>
-    </div>
-  </section>
+    <section class="highlight">
+        <div class="container">
+            <h2>Why Board Games Matter</h2>
+            <p>
+                Настолните игри не са само забавление – те събират хората,
+                предизвикват ни да мислим и създават много спомени.
+            </p>
+        </div>
+    </section>
 </main>
 
 <footer>
-  <div class="container">
-    <p>&copy; 2025 Petar Kuzmin – BoardGameHub</p>
-  </div>
+    <div class="container">
+        <p>&copy; 2025 Petar Kuzmin – BoardGameHub</p>
+    </div>
 </footer>
 
 <script src="js/auth.js"></script>
